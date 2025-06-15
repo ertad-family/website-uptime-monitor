@@ -1,0 +1,14 @@
+{
+  "telegram": {
+    "bot_token": "YOUR_BOT_TOKEN_HERE",
+    "chat_id": "YOUR_CHAT_ID_HERE"
+  },
+  "websites": [
+    "https://example.com",
+    "https://example.org"
+  ],
+  "settings": {
+    "timeout_seconds": 30,
+    "check_interval_minutes": 60
+  }
+}
