@@ -134,6 +134,38 @@ def format_status_message(url: str, is_up: bool, error_msg: str, status_code: Op
     return message
 
 
+def format_summary_message(current_state: Dict[str, bool]) -> str:
+    """Format a summary message showing all website statuses."""
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    message = "📊 <b>Current Status Summary</b>\n\n"
+    
+    up_sites = []
+    down_sites = []
+    
+    for website, is_up in current_state.items():
+        if is_up:
+            up_sites.append(website)
+        else:
+            down_sites.append(website)
+    
+    if up_sites:
+        message += "✅ <b>UP:</b>\n"
+        for site in up_sites:
+            message += f"  • {site}\n"
+        message += "\n"
+    
+    if down_sites:
+        message += "🔴 <b>DOWN:</b>\n"
+        for site in down_sites:
+            message += f"  • {site}\n"
+        message += "\n"
+    
+    message += f"Time: {timestamp}"
+    
+    return message
+
+
 def main():
     """Main monitoring function."""
     logger.info("Starting website monitoring check")
@@ -160,6 +192,10 @@ def main():
             message = format_status_message(website, is_up, error_msg, status_code)
             send_telegram_message(message)
             time.sleep(1)
+        
+        # Send summary of all current statuses
+        summary_message = format_summary_message(current_state)
+        send_telegram_message(summary_message)
     
     save_state(current_state)
     logger.info(f"Check completed. {len(status_changed)} status changes detected.")
