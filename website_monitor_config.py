@@ -8,9 +8,10 @@ from typing import Dict, Optional, Tuple
 import requests
 from requests.exceptions import RequestException, Timeout
 
-CONFIG_FILE = "config.json"
-STATE_FILE = "website_status.json"
-LOG_FILE = "website_monitor.log"
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+CONFIG_FILE = os.path.join(SCRIPT_DIR, "config.json")
+STATE_FILE = os.path.join(SCRIPT_DIR, "website_status.json")
+LOG_FILE = os.path.join(SCRIPT_DIR, "website_monitor.log")
 
 
 def load_config():
